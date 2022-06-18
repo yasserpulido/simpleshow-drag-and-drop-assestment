@@ -16,10 +16,10 @@
 }
 
 .start-button {
+  /* background-color: #e74c3c; */
   position: absolute;
-  z-index: 3;
-  width: 100px;
-  left: calc(100vh / 2);
-  top: 73%;
+  z-index: 1;
+  cursor: pointer;
+  width: 12%;
+  height: 12%;
 }
-
