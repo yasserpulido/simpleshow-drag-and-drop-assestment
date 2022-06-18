@@ -1,9 +1,9 @@
-.left-foot-container {
+.left-arm-container {
   position: absolute;
   z-index: 0;
 }
 
-.left-foot {
+.left-arm {
   position: absolute;
   z-index: 1;
   top: 0;

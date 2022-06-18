@@ -1,29 +1,29 @@
 import { React, useState } from "react";
 import Draggable from "react-draggable";
-import Foot from "../../../assets/images/svg/simplemech-leg2.svg";
+import Arm from "../../../assets/images/svg/simplemech-arm2.svg";
 
-import "./RightFoot.css";
+import "./RightArm.css";
 
-const RightFoot = () => {
-  const [rightFootContainer, setRightFootContainer] = useState({
-    x: 530,
-    y: 270,
+const RightArm = () => {
+  const [rightArmContainer, setRightArmContainer] = useState({
+    y: 126,
+    x: 571,
     width: 70,
     height: 70,
   });
-  const [rightFoot, setRightFoot] = useState({
-    x: 780,
-    y: 200,
+  const [rightArm, setRightArm] = useState({
+    x: 1080,
+    y: 140,
     width: 70,
     height: 70,
-    baseX: 780,
-    baseY: 200,
+    baseX: 1080,
+    baseY: 140,
   });
 
   const handleDrag = (e, ui) => {
-    const { x, y } = rightFoot;
+    const { x, y } = rightArm;
 
-    setRightFoot((prevState) => {
+    setRightArm((prevState) => {
       return { ...prevState, x: x + ui.deltaX, y: y + ui.deltaY };
     });
   };
@@ -45,25 +45,25 @@ const RightFoot = () => {
   };
 
   const handlePosition = () => {
-    const pos1 = getPosition(rightFootContainer);
-    const pos2 = getPosition(rightFoot);
+    const pos1 = getPosition(rightArmContainer);
+    const pos2 = getPosition(rightArm);
     const result =
       comparePosition(pos1[0], pos2[0]) && comparePosition(pos1[1], pos2[1]);
 
     if (result) {
-      setRightFoot((prevState) => {
+      setRightArm((prevState) => {
         return {
           ...prevState,
-          x: rightFootContainer.x,
-          y: rightFootContainer.y,
+          x: rightArmContainer.x,
+          y: rightArmContainer.y,
         };
       });
     } else {
-      setRightFoot((prevState) => {
+      setRightArm((prevState) => {
         return {
           ...prevState,
-          x: rightFoot.baseX,
-          y: rightFoot.baseY,
+          x: rightArm.baseX,
+          y: rightArm.baseY,
         };
       });
     }
@@ -74,34 +74,34 @@ const RightFoot = () => {
       <Draggable
         onDrag={handleDrag}
         defaultPosition={{
-          x: rightFoot.x,
-          y: rightFoot.y,
+          x: rightArm.x,
+          y: rightArm.y,
         }}
         onStop={handlePosition}
         position={{
-          x: rightFoot.x,
-          y: rightFoot.y,
+          x: rightArm.x,
+          y: rightArm.y,
         }}
       >
         <div
-          className="right-foot"
-          style={{ width: rightFoot.width }}
-          id="right-foot"
+          className="right-arm"
+          style={{ width: rightArm.width }}
+          id="right-arm"
         >
-          <img src={Foot} alt="Right Foot" style={{ width: rightFoot.width }} />
+          <img src={Arm} alt="Right Arm" style={{ width: rightArm.width }} />
         </div>
       </Draggable>
       <div
-        className="right-foot-container"
+        className="right-arm-container"
         style={{
-          width: rightFootContainer.width,
-          height: rightFootContainer.height,
-          top: rightFootContainer.y,
-          left: rightFootContainer.x,
+          width: rightArmContainer.width,
+          height: rightArmContainer.height,
+          top: rightArmContainer.y,
+          left: rightArmContainer.x,
         }}
       ></div>
     </div>
   );
 };
 
-export default RightFoot;
+export default RightArm;

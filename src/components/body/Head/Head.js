@@ -1,29 +1,29 @@
 import { React, useState } from "react";
 import Draggable from "react-draggable";
-import Foot from "../../../assets/images/svg/simplemech-leg1.svg";
+import Helmet from "../../../assets/images/svg/simplemech-head.svg";
 
-import "./LeftFoot.css";
+import "./Head.css";
 
-const LeftFoot = () => {
-  const [leftFootContainer, setLeftFootContainer] = useState({
-    x: 435,
-    y: 270,
+const Head = () => {
+  const [headContainer, setHeadContainer] = useState({
+    x: 485,
+    y: 50,
     width: 70,
-    height: 70,
+    height: 100,
   });
-  const [leftFoot, setLeftFoot] = useState({
-    x: 700,
-    y: 200,
+  const [head, setHead] = useState({
+    x: 880,
+    y: 320,
     width: 70,
     height: 70,
-    baseX: 700,
-    baseY: 200,
+    baseX: 880,
+    baseY: 320,
   });
 
   const handleDrag = (e, ui) => {
-    const { x, y } = leftFoot;
+    const { x, y } = head;
 
-    setLeftFoot((prevState) => {
+    setHead((prevState) => {
       return { ...prevState, x: x + ui.deltaX, y: y + ui.deltaY };
     });
   };
@@ -45,25 +45,25 @@ const LeftFoot = () => {
   };
 
   const handlePosition = () => {
-    const pos1 = getPosition(leftFootContainer);
-    const pos2 = getPosition(leftFoot);
+    const pos1 = getPosition(headContainer);
+    const pos2 = getPosition(head);
     const result =
       comparePosition(pos1[0], pos2[0]) && comparePosition(pos1[1], pos2[1]);
 
     if (result) {
-      setLeftFoot((prevState) => {
+      setHead((prevState) => {
         return {
           ...prevState,
-          x: leftFootContainer.x,
-          y: leftFootContainer.y,
+          x: headContainer.x,
+          y: headContainer.y,
         };
       });
     } else {
-      setLeftFoot((prevState) => {
+      setHead((prevState) => {
         return {
           ...prevState,
-          x: leftFoot.baseX,
-          y: leftFoot.baseY,
+          x: head.baseX,
+          y: head.baseY,
         };
       });
     }
@@ -74,34 +74,30 @@ const LeftFoot = () => {
       <Draggable
         onDrag={handleDrag}
         defaultPosition={{
-          x: leftFoot.x,
-          y: leftFoot.y,
+          x: head.x,
+          y: head.y,
         }}
         onStop={handlePosition}
         position={{
-          x: leftFoot.x,
-          y: leftFoot.y,
+          x: head.x,
+          y: head.y,
         }}
       >
-        <div
-          className="left-foot"
-          style={{ width: leftFoot.width }}
-          id="left-foot"
-        >
-          <img src={Foot} alt="Left Foot" style={{ width: leftFoot.width }} />
+        <div className="head" style={{ width: head.width }} id="head">
+          <img src={Helmet} alt="Head" style={{ width: head.width }} />
         </div>
       </Draggable>
       <div
-        className="left-foot-container"
+        className="head-container"
         style={{
-          width: leftFootContainer.width,
-          height: leftFootContainer.height,
-          top: leftFootContainer.y,
-          left: leftFootContainer.x,
+          width: headContainer.width,
+          height: headContainer.height,
+          top: headContainer.y,
+          left: headContainer.x,
         }}
       ></div>
     </div>
   );
 };
 
-export default LeftFoot;
+export default Head;
