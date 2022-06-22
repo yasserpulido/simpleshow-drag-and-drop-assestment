@@ -1,6 +1,7 @@
 # Browsers ALERT
 
-This project is not compatible with Chrome and Edge becuse SVG images format have problems. Try with Firefox.
+This project is not compatible with Chrome and Edge becuse SVG images format have problems. Try with Firefox.\
+You can use [https://drag-and-drop-react.web.app](https://drag-and-drop-react.web.app) to view it on Firebase.
 
 # Getting Started with Create React App
 
