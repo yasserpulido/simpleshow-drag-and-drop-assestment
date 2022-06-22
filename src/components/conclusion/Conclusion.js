@@ -12,7 +12,7 @@ const Conclusion = (props) => {
       setStartButton((prevState) => {
         return {
           ...prevState,
-          x: width / 2 + startButtonRef.current.offsetWidth * 5.6,
+          x: width / 2 + startButtonRef.current.offsetWidth * 3.8,
           y: height / 2 - startButtonRef.current.offsetHeight * 3.3,
         };
       });
@@ -23,14 +23,16 @@ const Conclusion = (props) => {
     props.end(true);
   };
 
-  return <div className="conclu-background">
-     <div
+  return (
+    <div className="conclu-background">
+      <div
         className="x-button"
         ref={startButtonRef}
         style={{ top: startButton.y, left: startButton.x }}
         onClick={clickStartHandler}
       ></div>
-  </div>;
+    </div>
+  );
 };
 
 export default Conclusion;

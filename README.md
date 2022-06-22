@@ -1,3 +1,7 @@
+# Browsers ALERT
+
+This project is not compatible with Chrome and Edge becuse SVG images format have problems. Try with Firefox.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

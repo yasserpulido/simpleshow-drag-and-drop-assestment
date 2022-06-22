@@ -23,11 +23,25 @@ function App() {
     setIsEnd(false);
   };
 
+  if (!isStart && !isEnd) {
+    return (
+      <React.Fragment>
+        <Introduction start={startHandler} />
+      </React.Fragment>
+    );
+  }
+
+  if (isStart && !isEnd) {
+    return (
+      <React.Fragment>
+        <Playground togglePart={togglePartHandler} />
+      </React.Fragment>
+    );
+  }
+
   return (
     <React.Fragment>
-      {!isStart && !isEnd && <Introduction start={startHandler} />}
-      {isStart && !isEnd && <Playground togglePart={togglePartHandler} />}
-      {!isStart && isEnd && <Conclusion end={endHandler} />}
+      <Conclusion end={endHandler} />
     </React.Fragment>
   );
 }

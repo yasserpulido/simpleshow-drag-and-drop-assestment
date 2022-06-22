@@ -12,8 +12,8 @@ const Introduction = (props) => {
       setStartButton((prevState) => {
         return {
           ...prevState,
-          x: width / 2 - startButtonRef.current.offsetWidth * 1.1,
-          y: height / 2 + startButtonRef.current.offsetHeight * 2.3,
+          x: width / 2 - startButtonRef.current.offsetWidth * 0.5,
+          y: height / 2 + startButtonRef.current.offsetHeight * 2,
         };
       });
     }
