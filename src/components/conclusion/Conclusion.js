@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
-import "./Conclusion.css";
+import "./Conclusion.scss";
 
 const Conclusion = (props) => {
   const { height, width } = useWindowDimensions();

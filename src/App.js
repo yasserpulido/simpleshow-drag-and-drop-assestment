@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import "./App.css";
 import Conclusion from "./components/conclusion/Conclusion";
 import Introduction from "./components/introduction/Introduction";
 import Playground from "./components/playground/Playground";
 
 function App() {
   const [isStart, setIsStart] = useState(false);
-  const [isEnd, setIsEnd] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
 
   const startHandler = (isStart) => {
     setIsStart(isStart);

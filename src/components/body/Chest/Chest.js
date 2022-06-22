@@ -5,7 +5,7 @@ import useDiposition from "../../../hooks/usePosition";
 import useCoordinate from "../../../hooks/useCoordinate";
 import useWindowDimensions from "../../../hooks/useWindowDimensions";
 
-import "./Chest.css";
+import "./Chest.scss";
 
 const Chest = (props) => {
   const { height, width } = useWindowDimensions();

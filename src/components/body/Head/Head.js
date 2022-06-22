@@ -5,7 +5,7 @@ import useDiposition from "../../../hooks/usePosition";
 import useCoordinate from "../../../hooks/useCoordinate";
 import useWindowDimensions from "../../../hooks/useWindowDimensions";
 
-import "./Head.css";
+import "./Head.scss";
 
 const Head = (props) => {
   const { height, width } = useWindowDimensions();

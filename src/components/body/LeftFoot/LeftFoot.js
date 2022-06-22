@@ -5,7 +5,7 @@ import useDiposition from "../../../hooks/usePosition";
 import useCoordinate from "../../../hooks/useCoordinate";
 import useWindowDimensions from "../../../hooks/useWindowDimensions";
 
-import "./LeftFoot.css";
+import "./LeftFoot.scss";
 
 const LeftFoot = (props) => {
   const { height, width } = useWindowDimensions();

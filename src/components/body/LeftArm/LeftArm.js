@@ -5,7 +5,7 @@ import useDiposition from "../../../hooks/usePosition";
 import useCoordinate from "../../../hooks/useCoordinate";
 import useWindowDimensions from "../../../hooks/useWindowDimensions";
 
-import "./LeftArm.css";
+import "./LeftArm.scss";
 
 const LeftArm = (props) => {
   const { height, width } = useWindowDimensions();

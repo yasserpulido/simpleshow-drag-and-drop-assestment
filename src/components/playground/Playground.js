@@ -7,7 +7,7 @@ import RightArm from "../body/RightArm/RightArm";
 import RightFoot from "../body/RightFoot/RightFoot";
 import Instruction from "../../assets/images/svg/instruction_box.svg";
 
-import "./Playground.css";
+import "./Playground.scss";
 
 const Playground = (props) => {
   const [robotPart, setRobotPart] = useState({
