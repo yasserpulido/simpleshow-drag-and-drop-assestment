@@ -1,10 +1,16 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import Foot from "../../../assets/images/svg/simplemech-leg1.svg";
+import useDiposition from "../../../hooks/usePosition";
+import useCoordinate from "../../../hooks/useCoordinate";
+import useWindowDimensions from "../../../hooks/useWindowDimensions";
 
 import "./LeftFoot.css";
 
-const LeftFoot = () => {
+const LeftFoot = (props) => {
+  const { height, width } = useWindowDimensions();
+  const coordinates = useCoordinate("leftFoot", height, width);
+
   const [leftFootContainer, setLeftFootContainer] = useState({
     x: 435,
     y: 270,
@@ -20,6 +26,31 @@ const LeftFoot = () => {
     baseY: 200,
   });
 
+  const togglePart = (toggle) => {
+    props.togglePart({ id: "leftFoot", hasPart: toggle });
+  };
+
+  useEffect(() => {
+    setLeftFoot({
+      x: coordinates.part.x,
+      y: coordinates.part.y,
+      width: coordinates.part.width,
+      height: coordinates.part.height,
+      baseX: coordinates.part.baseX,
+      baseY: coordinates.part.baseY,
+    });
+
+    setLeftFootContainer({
+      x: coordinates.container.x,
+      y: coordinates.container.y,
+      width: coordinates.container.width,
+      height: coordinates.container.height,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [height, width]);
+
+  const onPosition = useDiposition(leftFootContainer, leftFoot);
+
   const handleDrag = (e, ui) => {
     const { x, y } = leftFoot;
 
@@ -28,29 +59,8 @@ const LeftFoot = () => {
     });
   };
 
-  const getPosition = (element) => {
-    const width = element.width;
-    const height = element.height;
-
-    return [
-      [element.x, element.x + width],
-      [element.y, element.y + height],
-    ];
-  };
-
-  const comparePosition = (p1, p2) => {
-    const r1 = p1[0] < p2[0] ? p1 : p2;
-    const r2 = p1[0] < p2[0] ? p2 : p1;
-    return r1[1] > r2[0] || r1[0] === r2[0];
-  };
-
   const handlePosition = () => {
-    const pos1 = getPosition(leftFootContainer);
-    const pos2 = getPosition(leftFoot);
-    const result =
-      comparePosition(pos1[0], pos2[0]) && comparePosition(pos1[1], pos2[1]);
-
-    if (result) {
+    if (onPosition) {
       setLeftFoot((prevState) => {
         return {
           ...prevState,
@@ -58,6 +68,7 @@ const LeftFoot = () => {
           y: leftFootContainer.y,
         };
       });
+      togglePart(true);
     } else {
       setLeftFoot((prevState) => {
         return {
@@ -66,6 +77,7 @@ const LeftFoot = () => {
           y: leftFoot.baseY,
         };
       });
+      togglePart(false);
     }
   };
 
@@ -83,13 +95,12 @@ const LeftFoot = () => {
           y: leftFoot.y,
         }}
       >
-        <div
+        <img
           className="left-foot"
+          src={Foot}
+          alt="Left Foot"
           style={{ width: leftFoot.width }}
-          id="left-foot"
-        >
-          <img src={Foot} alt="Left Foot" style={{ width: leftFoot.width }} />
-        </div>
+        />
       </Draggable>
       <div
         className="left-foot-container"

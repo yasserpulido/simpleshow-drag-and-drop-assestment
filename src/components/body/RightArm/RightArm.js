@@ -1,24 +1,55 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import Draggable from "react-draggable";
-import Arm from "../../../assets/images/svg/simplemech-arm2.svg";
+import Arm from "../../../assets/images/svg/simplemech-arm_2.svg";
+import useDiposition from "../../../hooks/usePosition";
+import useCoordinate from "../../../hooks/useCoordinate";
+import useWindowDimensions from "../../../hooks/useWindowDimensions";
 
 import "./RightArm.css";
 
-const RightArm = () => {
+const RightArm = (props) => {
+  const { height, width } = useWindowDimensions();
+  const coordinates = useCoordinate("rightArm", height, width);
+
   const [rightArmContainer, setRightArmContainer] = useState({
-    y: 126,
-    x: 571,
-    width: 70,
-    height: 70,
+    y: 0,
+    x: 0,
+    width: 0,
+    height: 0,
   });
   const [rightArm, setRightArm] = useState({
-    x: 1080,
-    y: 140,
-    width: 70,
-    height: 70,
-    baseX: 1080,
-    baseY: 140,
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+    baseX: 0,
+    baseY: 0,
   });
+
+  const togglePart = (toggle) => {
+    props.togglePart({ id: "rightArm", hasPart: toggle });
+  };
+
+  useEffect(() => {
+    setRightArm({
+      x: coordinates.part.x,
+      y: coordinates.part.y,
+      width: coordinates.part.width,
+      height: coordinates.part.height,
+      baseX: coordinates.part.baseX,
+      baseY: coordinates.part.baseY,
+    });
+
+    setRightArmContainer({
+      x: coordinates.container.x,
+      y: coordinates.container.y,
+      width: coordinates.container.width,
+      height: coordinates.container.height,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [height, width]);
+
+  const onPosition = useDiposition(rightArmContainer, rightArm);
 
   const handleDrag = (e, ui) => {
     const { x, y } = rightArm;
@@ -28,29 +59,8 @@ const RightArm = () => {
     });
   };
 
-  const getPosition = (element) => {
-    const width = element.width;
-    const height = element.height;
-
-    return [
-      [element.x, element.x + width],
-      [element.y, element.y + height],
-    ];
-  };
-
-  const comparePosition = (p1, p2) => {
-    const r1 = p1[0] < p2[0] ? p1 : p2;
-    const r2 = p1[0] < p2[0] ? p2 : p1;
-    return r1[1] > r2[0] || r1[0] === r2[0];
-  };
-
   const handlePosition = () => {
-    const pos1 = getPosition(rightArmContainer);
-    const pos2 = getPosition(rightArm);
-    const result =
-      comparePosition(pos1[0], pos2[0]) && comparePosition(pos1[1], pos2[1]);
-
-    if (result) {
+    if (onPosition) {
       setRightArm((prevState) => {
         return {
           ...prevState,
@@ -58,6 +68,7 @@ const RightArm = () => {
           y: rightArmContainer.y,
         };
       });
+      togglePart(true);
     } else {
       setRightArm((prevState) => {
         return {
@@ -66,6 +77,7 @@ const RightArm = () => {
           y: rightArm.baseY,
         };
       });
+      togglePart(false);
     }
   };
 
@@ -83,13 +95,12 @@ const RightArm = () => {
           y: rightArm.y,
         }}
       >
-        <div
+        <img
           className="right-arm"
+          src={Arm}
+          alt="Right Arm"
           style={{ width: rightArm.width }}
-          id="right-arm"
-        >
-          <img src={Arm} alt="Right Arm" style={{ width: rightArm.width }} />
-        </div>
+        />
       </Draggable>
       <div
         className="right-arm-container"

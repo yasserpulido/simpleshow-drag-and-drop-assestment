@@ -1,24 +1,55 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import Foot from "../../../assets/images/svg/simplemech-leg2.svg";
+import useDiposition from "../../../hooks/usePosition";
+import useCoordinate from "../../../hooks/useCoordinate";
+import useWindowDimensions from "../../../hooks/useWindowDimensions";
 
 import "./RightFoot.css";
 
-const RightFoot = () => {
+const RightFoot = (props) => {
+  const { height, width } = useWindowDimensions();
+  const coordinates = useCoordinate("rightFoot", height, width);
+
   const [rightFootContainer, setRightFootContainer] = useState({
-    x: 530,
-    y: 270,
-    width: 70,
-    height: 70,
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
   });
   const [rightFoot, setRightFoot] = useState({
-    x: 780,
-    y: 200,
-    width: 70,
-    height: 70,
-    baseX: 780,
-    baseY: 200,
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+    baseX: 0,
+    baseY: 0,
   });
+
+  const togglePart = (toggle) => {
+    props.togglePart({ id: "rightFoot", hasPart: toggle });
+  };
+
+  useEffect(() => {
+    setRightFoot({
+      x: coordinates.part.x,
+      y: coordinates.part.y,
+      width: coordinates.part.width,
+      height: coordinates.part.height,
+      baseX: coordinates.part.baseX,
+      baseY: coordinates.part.baseY,
+    });
+
+    setRightFootContainer({
+      x: coordinates.container.x,
+      y: coordinates.container.y,
+      width: coordinates.container.width,
+      height: coordinates.container.height,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [height, width]);
+
+  const onPosition = useDiposition(rightFootContainer, rightFoot);
 
   const handleDrag = (e, ui) => {
     const { x, y } = rightFoot;
@@ -28,29 +59,8 @@ const RightFoot = () => {
     });
   };
 
-  const getPosition = (element) => {
-    const width = element.width;
-    const height = element.height;
-
-    return [
-      [element.x, element.x + width],
-      [element.y, element.y + height],
-    ];
-  };
-
-  const comparePosition = (p1, p2) => {
-    const r1 = p1[0] < p2[0] ? p1 : p2;
-    const r2 = p1[0] < p2[0] ? p2 : p1;
-    return r1[1] > r2[0] || r1[0] === r2[0];
-  };
-
   const handlePosition = () => {
-    const pos1 = getPosition(rightFootContainer);
-    const pos2 = getPosition(rightFoot);
-    const result =
-      comparePosition(pos1[0], pos2[0]) && comparePosition(pos1[1], pos2[1]);
-
-    if (result) {
+    if (onPosition) {
       setRightFoot((prevState) => {
         return {
           ...prevState,
@@ -58,6 +68,7 @@ const RightFoot = () => {
           y: rightFootContainer.y,
         };
       });
+      togglePart(true);
     } else {
       setRightFoot((prevState) => {
         return {
@@ -66,6 +77,7 @@ const RightFoot = () => {
           y: rightFoot.baseY,
         };
       });
+      togglePart(false);
     }
   };
 
@@ -83,13 +95,12 @@ const RightFoot = () => {
           y: rightFoot.y,
         }}
       >
-        <div
+        <img
           className="right-foot"
+          src={Foot}
+          alt="Left Foot"
           style={{ width: rightFoot.width }}
-          id="right-foot"
-        >
-          <img src={Foot} alt="Right Foot" style={{ width: rightFoot.width }} />
-        </div>
+        />
       </Draggable>
       <div
         className="right-foot-container"

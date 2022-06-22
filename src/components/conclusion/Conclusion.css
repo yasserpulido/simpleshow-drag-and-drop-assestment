@@ -1,16 +1,16 @@
-.intro-background {
+.conclu-background {
   height: 100%;
   width: 100%;
-  background-image: url("../../assets/images/svg/start_overlay-box-large.svg");
+  background-image: url("../../assets/images/svg/feedback_overlay-box-large.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
 }
 
-.start-button {
+.x-button {
   position: absolute;
   z-index: 2;
   cursor: pointer;
-  width: 12%;
-  height: 12%;
+  width: 5%;
+  height: 10%;
 }

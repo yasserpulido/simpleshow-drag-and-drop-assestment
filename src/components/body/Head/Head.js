@@ -1,24 +1,55 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import Helmet from "../../../assets/images/svg/simplemech-head.svg";
+import useDiposition from "../../../hooks/usePosition";
+import useCoordinate from "../../../hooks/useCoordinate";
+import useWindowDimensions from "../../../hooks/useWindowDimensions";
 
 import "./Head.css";
 
-const Head = () => {
+const Head = (props) => {
+  const { height, width } = useWindowDimensions();
+  const coordinates = useCoordinate("head", height, width);
+
   const [headContainer, setHeadContainer] = useState({
-    x: 485,
-    y: 50,
-    width: 70,
-    height: 100,
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
   });
   const [head, setHead] = useState({
-    x: 880,
-    y: 320,
-    width: 70,
-    height: 70,
-    baseX: 880,
-    baseY: 320,
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+    baseX: 0,
+    baseY: 0,
   });
+
+  const togglePart = (toggle) => {
+    props.togglePart({ id: "head", hasPart: toggle });
+  };
+
+  useEffect(() => {
+    setHead({
+      x: coordinates.part.x,
+      y: coordinates.part.y,
+      width: coordinates.part.width,
+      height: coordinates.part.height,
+      baseX: coordinates.part.baseX,
+      baseY: coordinates.part.baseY,
+    });
+
+    setHeadContainer({
+      x: coordinates.container.x,
+      y: coordinates.container.y,
+      width: coordinates.container.width,
+      height: coordinates.container.height,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [height, width]);
+
+  const onPosition = useDiposition(headContainer, head);
 
   const handleDrag = (e, ui) => {
     const { x, y } = head;
@@ -28,29 +59,8 @@ const Head = () => {
     });
   };
 
-  const getPosition = (element) => {
-    const width = element.width;
-    const height = element.height;
-
-    return [
-      [element.x, element.x + width],
-      [element.y, element.y + height],
-    ];
-  };
-
-  const comparePosition = (p1, p2) => {
-    const r1 = p1[0] < p2[0] ? p1 : p2;
-    const r2 = p1[0] < p2[0] ? p2 : p1;
-    return r1[1] > r2[0] || r1[0] === r2[0];
-  };
-
   const handlePosition = () => {
-    const pos1 = getPosition(headContainer);
-    const pos2 = getPosition(head);
-    const result =
-      comparePosition(pos1[0], pos2[0]) && comparePosition(pos1[1], pos2[1]);
-
-    if (result) {
+    if (onPosition) {
       setHead((prevState) => {
         return {
           ...prevState,
@@ -58,6 +68,7 @@ const Head = () => {
           y: headContainer.y,
         };
       });
+      togglePart(true);
     } else {
       setHead((prevState) => {
         return {
@@ -66,6 +77,7 @@ const Head = () => {
           y: head.baseY,
         };
       });
+      togglePart(false);
     }
   };
 
@@ -83,9 +95,12 @@ const Head = () => {
           y: head.y,
         }}
       >
-        <div className="head" style={{ width: head.width }} id="head">
-          <img src={Helmet} alt="Head" style={{ width: head.width }} />
-        </div>
+        <img
+          className="head"
+          src={Helmet}
+          alt="Head"
+          style={{ width: head.width }}
+        />
       </Draggable>
       <div
         className="head-container"

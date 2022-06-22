@@ -3,14 +3,16 @@ body {
   height: 100%;
 }
 
-.background {
+.play-background {
   height: 100vh;
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-image: url("../../assets/images/svg/hanger_background.svg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-.hangar {
-  height: 100%;
+.instruction {
+  width: 30%;
+  position: absolute;
+  top: 10%;
+  right: 10%;
 }
